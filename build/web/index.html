@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="FetchLobbyRoomApp">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="lib/jquery-2.1.4.js"></script>
+        <script src="lib/angular.min.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/AngularApp/App/FetchLobbyApp.js"></script>
+        <script src="js/AngularApp/Service/FetchLobbyRoomService.js"></script>
+        <script src="js/AngularApp/Controller/FetchLobbyController.js"></script>
+    </head>
+    <body>
+        <div ng-controller="FetchLobbyRoomController">
+            <div ng-repeat="room in rooms">
+                <div>{{room.GameId}}</div>
+            </div>
+        <br>
+        <button id="CreateRoom" ng-click="createNewGame()">CreateRoom</button>
+        </div>
+        <br>
+        
+    </body>
+</html>
