@@ -7,7 +7,9 @@ FetchLobbyRoomModule.controller( 'FetchLobbyRoomController', function ( $scope, 
         var t = JSON.parse(event.data);
         console.log(t);
         $scope.rooms = t;
-    }
+        console.log("test my git");
+        }
+    
         $scope.createNewGame = function(){
         console.log("tst");
         FetchLobbyRoomService.createNewGame().then(function(response){
