@@ -12,19 +12,25 @@ and open the template in the editor.
         <script src="lib/jquery-2.1.4.js"></script>
         <script src="lib/angular.min.js"></script>
         <script src="js/index.js"></script>
+        <script src="lib/handlebars-v3.0.3.js"></script>
         <script src="js/AngularApp/App/FetchLobbyApp.js"></script>
         <script src="js/AngularApp/Service/FetchLobbyRoomService.js"></script>
         <script src="js/AngularApp/Controller/FetchLobbyController.js"></script>
+        <script id="gameListTemplate" type="text/x-handlebars">
+           <div id="{{ gameId }}">
+            <h2 class="success">{{ gameId }} <button id="{{ gameId }}" class="btn btn-success" type="button" value="{{ gameId }}">JoinUs!</button></h2>
+           </div>
+        </script>
     </head>
     <body>
         <div ng-controller="FetchLobbyRoomController">
+            <div id="gameId"></div>
             <div ng-repeat="room in rooms">
-                <div>{{room.GameId}}</div>
+                <h2 class="success">{{room}} <button id="{{room}}" class="btn btn-success" type="button" value="{{room}}">JoinUs!</button></h2>
             </div>
         <br>
-        <button id="CreateRoom" ng-click="createNewGame()">CreateRoom</button>
+        <button ng-click="createNewGame()">CreateRoom</button>
         </div>
         <br>
-        
     </body>
 </html>

@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/tictaclu/Documents/LinkUp/src/java/llk/restful/lobby/LobbyResource.java</file>
+            <file>file:/home/tictaclu/Documents/LinkUp/src/java/llk/core/matchCore.java</file>
+            <file>file:/home/tictaclu/Documents/LinkUp/web/js/AngularApp/Controller/FetchLobbyController.js</file>
+            <file>file:/home/tictaclu/Documents/LinkUp/web/index.html</file>
+            <file>file:/home/tictaclu/Documents/LinkUp/web/js/AngularApp/App/FetchLobbyApp.js</file>
+        </group>
     </open-files>
 </project-private>

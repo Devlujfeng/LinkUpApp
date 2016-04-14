@@ -14,7 +14,7 @@ import javax.jms.Session;
  */
 public class matchCore {
     int plate[][] = new int[8][21];
-    
+    boolean flag = false;
     public void assignValue(){
         for(int i = 0; i < plate.length; i++){
             for(int j=0; j< plate[i].length; j++){
@@ -40,7 +40,9 @@ public class matchCore {
         if(plate[A[0]][A[1]] == plate[B[0]][B[1]]){
          plate[A[0]][A[1]] = 0;
          plate[B[0]][B[1]] = 0;
-         printOut();}
+         printOut();
+        flag = true;
+        }
         else{
             System.out.println("Not Equal");
         }

@@ -5,4 +5,10 @@ FetchLobbyRoomModule.service("FetchLobbyRoomService", function ($http) {
         return request;
     };
     //access restful
+    this.getAllRooms = function () {
+        var request = $http.get(serviceAddress + 'lobby/getAllRooms');
+        return request;
+    };
+    
+    
 });

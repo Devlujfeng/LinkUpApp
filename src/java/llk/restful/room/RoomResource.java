@@ -1,5 +1,6 @@
-package llk.restful.lobby;
+package llk.restful.room;
 
+import llk.restful.room.*;
 import java.util.Set;
 import javax.annotation.Resource;
 import javax.enterprise.concurrent.ManagedScheduledExecutorService;
@@ -18,8 +19,8 @@ import org.glassfish.jersey.media.sse.EventOutput;
 import org.glassfish.jersey.media.sse.SseFeature;
 
 @RequestScoped
-@Path("/lobby")
-public class LobbyResource {
+@Path("/{gameroom}")
+public class RoomResource {
     @Inject private ParticipantList participants;
     
     
@@ -29,8 +30,7 @@ public class LobbyResource {
     @GET     
     @Produces(SseFeature.SERVER_SENT_EVENTS)
      
-    public Response connect() {
-        
+    public Response connect() {       
          System.out.println(">>> new connection ");
          EventOutput eo = new EventOutput();
          participants.add(eo);
@@ -50,24 +50,24 @@ public class LobbyResource {
 //        return (Response.ok(eo).build());
 //    }
 //    
-    @Inject private RoomContainer RoomContainer;
-    @GET
-    @Path("/getAllRooms")
-    public JsonArray getAllRooms() {
-        System.out.println("test");
-        JsonArrayBuilder builder = Json.createArrayBuilder();
-        Set<String> keys = RoomContainer.getAllRoom().keySet();
-        
-        String [] rooms = keys.toArray(new String[keys.size()]);
-        for(int i=0; i < keys.size(); i++){
-            System.out.println(rooms[i]);
-        }
-        for(int i=0; i < keys.size(); i++){
-            builder.add(
-            Json.createObjectBuilder()
-                    .add("rooms",rooms[i])
-            );
-        }
-        return (builder.build());
-    }
+//    @Inject private RoomContainer RoomContainer;
+//    @GET
+//    @Path("/getAllRooms")
+//    public JsonArray getAllRooms() {
+//        System.out.println("test");
+//        JsonArrayBuilder builder = Json.createArrayBuilder();
+//        Set<String> keys = RoomContainer.getAllRoom().keySet();
+//        
+//        String [] rooms = keys.toArray(new String[keys.size()]);
+//        for(int i=0; i < keys.size(); i++){
+//            System.out.println(rooms[i]);
+//        }
+//        for(int i=0; i < keys.size(); i++){
+//            builder.add(
+//            Json.createObjectBuilder()
+//                    .add("rooms",rooms[i])
+//            );
+//        }
+//        return (builder.build());
+//    }
 }

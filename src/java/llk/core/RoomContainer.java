@@ -5,6 +5,7 @@
  */
 package llk.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import javax.enterprise.context.ApplicationScoped;
@@ -34,4 +35,27 @@ public class RoomContainer {
             return null;
         }
     }
+    public HashMap<String, matchCore> getAllRoom(){
+        return roomList;
+    }
+    
+    public int [][] initGame(String roomID){
+        try{
+        matchCore gameObject = roomList.get(roomID);
+        gameObject.assignValue();
+        return gameObject.plate;
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+   
+    public boolean gameResult(String roomID){
+        int[] A = {1,2};
+        int[] B = {1,3};
+        matchCore gameObject = roomList.get(roomID);
+        gameObject.oneCorner(A,B);
+        return false;
+    }
+    
 }
