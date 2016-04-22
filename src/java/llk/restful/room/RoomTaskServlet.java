@@ -41,13 +41,30 @@ public class RoomTaskServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException { 
-       
         
+        String AcardID = req.getParameter("AcardID");
+        String BcardID = req.getParameter("BcardID");
+        System.out.println(AcardID + "-----"+  BcardID);
+        int [] A = idConverter(AcardID);
+        int [] B = idConverter(BcardID);
+        String roomID = req.getParameter("RoomID");
         
-        
-        
-       service.submit(new RoomTask(RoomContainer.createGame(),participants));
-        resp.setStatus(HttpServletResponse.SC_OK);
-    }        
+        if(RoomContainer.ReturnResult(roomID, A, B)){
+            int[][] plate = RoomContainer.getNowGame(roomID);
+            service.submit(new RoomTask(participants,roomID,plate));
+            resp.setStatus(HttpServletResponse.SC_OK);
+        }
+        else{
+            resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+        }
+    }
+    public int [] idConverter(String AcardID){
+        int number = Integer.parseInt(AcardID);
+        int row =  (int)Math.floor(number/21);
+        int column = number%21;
+        int [] identity = {row,column};
+        System.out.println(row + "======" + column);
+        return identity;
+    }
     
 }

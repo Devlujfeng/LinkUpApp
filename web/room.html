@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="PlayGameApp">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="lib/jquery-2.1.4.js"></script>
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/handlebars-v3.0.3.js"></script>
+        <script src="js/AngularApp/App/PlayGameApp.js"></script>
+        <script src="js/AngularApp/Service/PlayGameService.js"></script>
+        <script src="js/AngularApp/Controller/PlayGameController.js"></script>
+        <script id="plateTemplate" type="text/x-handlebars">
+           <div id="{{ gameId }}">
+            <h2 class="success">{{ gameId }} <button id="{{ gameId }}" class="btn btn-success" type="button" value="{{ gameId }}">JoinUs!</button></h2>
+           </div>
+        </script>
+        <link href="css/room.css" rel='stylesheet' type='text/css' />
+        <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+    </head>
+    <body class="bc">
+        
+        <div class="" ng-controller="PlayGameController">
+                <h1 id="roomNumber">{{roomNumber}}</h1>
+            <span ng-repeat="value in Values track by $index">
+                <img class="imgresize imgclick" src="img/{{value}}.gif" id="{{$index}}" ng-bind="value" ng-click="updateSelection(this)">
+                <br ng-if="!(($index + 1) % 21)" />
+            </span>
+            <div class="col-lg-12">
+                <div class="col-lg-4"></div>
+            <div class="messageDiv col-lg-4">
+                 <textarea class="form-control" id="messages2" cols="20" rows="10" readonly>
+                 </textarea>
+                <input ng-model="userName" type="text" id="name2" class="form-control" placeholder="Your name" size="10" value="">
+                 <input ng-model="message" type="text" id="msg2" class="form-control" placeholder="Your message" size="30">
+                 <div class="b-btn">
+                 <button ng-click="sendMessage()" class="btn-danger" id="sendBtn">Send</button>
+                 </div>
+            </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -18,8 +18,8 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public class RoomContainer {
-    HashMap<String, matchCore> roomList = new HashMap<>();
     
+    HashMap<String, matchCore> roomList = new HashMap<>();
     public String createGame(){
         try{
         System.out.println("Let me check");
@@ -27,6 +27,7 @@ public class RoomContainer {
         int x = r.nextInt(1000000);
         String roomName = "Room" + x;
         matchCore plateNew = new matchCore();
+        plateNew.assignValue();
         roomList.put(roomName, plateNew);
         return roomName;
         }
@@ -42,7 +43,6 @@ public class RoomContainer {
     public int [][] initGame(String roomID){
         try{
         matchCore gameObject = roomList.get(roomID);
-        gameObject.assignValue();
         return gameObject.plate;
         }
         catch(Exception e){
@@ -50,12 +50,25 @@ public class RoomContainer {
         }
     }
    
-    public boolean gameResult(String roomID){
-        int[] A = {1,2};
-        int[] B = {1,3};
+    public boolean ReturnResult(String roomID, int [] A, int [] B){
+
         matchCore gameObject = roomList.get(roomID);
-        gameObject.oneCorner(A,B);
-        return false;
+        System.out.println(gameObject.counter + "<<<<>>>>" + gameObject.userCounter.get(gameObject.counter));
+        gameObject.userCounter.put(gameObject.counter, false);
+        gameObject.noCorner(A,B);
+        System.out.println(gameObject.counter + "<<<<>>>>" + gameObject.userCounter.get(gameObject.counter));
+        gameObject.counter ++;
+        return gameObject.userCounter.get(gameObject.counter-1);
+    }
+    
+    public int [][] getNowGame(String roomID){
+        try{
+        matchCore gameObject = roomList.get(roomID);
+        return gameObject.plate;
+        }
+        catch(Exception e){
+            return null;
+        }
     }
     
 }

@@ -6,9 +6,11 @@
 package llk.restful.lobby;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.annotation.Resource;
 import javax.enterprise.concurrent.ManagedScheduledExecutorService;
 import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,8 +42,9 @@ public class LobbyTaskServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException { 
-       service.submit(new LobbyTask(RoomContainer.createGame(),participants));
-        resp.setStatus(HttpServletResponse.SC_OK);
+        String roomNo = RoomContainer.createGame();
+        service.submit(new LobbyTask(roomNo,participants));
+        PrintWriter out = resp.getWriter();
+        out.write(roomNo);
     }        
-    
 }

@@ -9,6 +9,4 @@ FetchLobbyRoomModule.service("FetchLobbyRoomService", function ($http) {
         var request = $http.get(serviceAddress + 'lobby/getAllRooms');
         return request;
     };
-    
-    
 });

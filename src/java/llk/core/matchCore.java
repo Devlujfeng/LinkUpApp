@@ -5,6 +5,7 @@
  */
 package llk.core;
 
+import java.util.HashMap;
 import javax.jms.Session;
 
 
@@ -14,7 +15,9 @@ import javax.jms.Session;
  */
 public class matchCore {
     int plate[][] = new int[8][21];
-    boolean flag = false;
+    int counter = 1;
+    HashMap<Integer, Boolean> userCounter = new HashMap<Integer, Boolean>();
+    
     public void assignValue(){
         for(int i = 0; i < plate.length; i++){
             for(int j=0; j< plate[i].length; j++){
@@ -30,9 +33,9 @@ public class matchCore {
     public void printOut(){
         for(int i = 0; i < plate.length; i++){
             for(int j=0; j < plate[i].length; j++){
-                System.out.print(plate[i][j]+" ");
+                System.out.print(plate[i][j]);
             }
-            System.out.println("");
+            //System.out.println("");
         }
     }
     
@@ -41,7 +44,8 @@ public class matchCore {
          plate[A[0]][A[1]] = 0;
          plate[B[0]][B[1]] = 0;
          printOut();
-        flag = true;
+            System.out.println("Successfully Match");
+         userCounter.put(counter, true);
         }
         else{
             System.out.println("Not Equal");
@@ -842,7 +846,7 @@ public class matchCore {
              if(diffVert > 0){
                  int sumVert = 0;
                  for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[B[0]+i][B[1]];
+                   sumVert =+ plate[B[0]][B[1]+i];
                }
                if(sumHori == 0 && sumVert == 0){
                    System.out.println("1 Corner for D getting into link20");
@@ -1045,6 +1049,7 @@ public class matchCore {
             }
             else{
                 System.out.println("same value but not same axis");
+                logicHub("GoToOneCorner",A,B);
             }
         }
         else{

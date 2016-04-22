@@ -8,6 +8,8 @@ package llk.restful.room;
 import llk.restful.room.*;
 import llk.restful.*;
 import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.sse.OutboundEvent;
@@ -19,20 +21,33 @@ import org.glassfish.jersey.media.sse.OutboundEvent;
 public class RoomTask implements Runnable {
 
     private ParticipantList participants;
-    String gameId;
-
-    public RoomTask(String GameId, ParticipantList p) {
+    String roomNumber;
+    int[][] plate;
+    
+    public RoomTask( ParticipantList p, String rn, int [][] pl) {
         participants = p;
-        gameId = GameId;
+        roomNumber = rn;
+        plate = pl;
     }
     @Override
     public void run() {
-        System.out.println(">>> broadcasting message: " + gameId);
-        JsonObject json = Json.createObjectBuilder()
-                .add("GameId", gameId)
-                .build();
+        
+        System.out.println(">>> broadcasting message: " + roomNumber);
+
+            JsonArrayBuilder JsonAB = Json.createArrayBuilder();
+                for(int i = 0; i < plate.length; i++){
+                    for(int j=0; j < plate[i].length; j++){
+                        JsonAB.add(
+                                Json.createObjectBuilder()
+                                .add("value", plate[i][j])
+                        );
+                    }
+                }
+                JsonArray allcards = JsonAB.build(); 
+        
         OutboundEvent data = new OutboundEvent.Builder()
-                .data(JsonObject.class, json)
+                .data(JsonArray.class, allcards)
+                .name(roomNumber+"Rd")
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
                 .build();
         participants.send(data);

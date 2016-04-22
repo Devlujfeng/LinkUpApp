@@ -15,11 +15,11 @@ FetchLobbyRoomModule.controller( 'FetchLobbyRoomController', function ( $scope, 
         }
         $scope.createNewGame = function(){
             FetchLobbyRoomService.createNewGame().then(function(response){
-            console.log(response);
+            url ="room.html?id="+response.data;
+            location.href = url;
             }); 
         };
         $scope.getAllRooms = function(){
-            console.log("test");
             FetchLobbyRoomService.getAllRooms().then(function(response){
                 console.log(response);
                 var roomId =[];
@@ -32,5 +32,15 @@ FetchLobbyRoomModule.controller( 'FetchLobbyRoomController', function ( $scope, 
             });
         }
         $scope.getAllRooms();
+        $scope.joinGame = function(event){
+            console.log(event.room);
+            url ="room.html?id=" + event.room;
+            location.href = url;
+        }
 });
-
+        function joinGame(event){
+            console.log(event.value);
+           // alert("tset");
+            url ="room.html?id=" + event.value;
+            location.href = url;
+        };

@@ -19,13 +19,13 @@ public class BroadcastMessageTask implements Runnable {
     private String name;
     private String message;
     private ParticipantList participants;
-    
+    private String chatname;
 
-    public BroadcastMessageTask(String n, String m, ParticipantList p) {
+    public BroadcastMessageTask(String n, String m, ParticipantList p, String ch) {
         name = n;
         message = m;
         participants = p;
-     
+        chatname = ch;
     }
 
     @Override
@@ -39,6 +39,7 @@ public class BroadcastMessageTask implements Runnable {
                 .build();
         OutboundEvent data = new OutboundEvent.Builder()
                 .data(JsonObject.class, json)
+                .name(chatname)
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
                 .build();
         participants.send(data);

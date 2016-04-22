@@ -1,0 +1,24 @@
+.bc{
+        background-color: beige;
+}
+.imgresize{
+    width: 4%;
+}
+
+.imgclick{
+        transform: rotate(0deg);
+    transition-duration: 1000ms;
+    transition-property: all;
+    transition-timing-function: linear;
+}
+.imgclick:hover{
+    vertical-align: middle;
+    transform: rotate(40deg);
+    transition-duration: 50ms;
+    transition-property: all;
+    transition-timing-function: linear;
+}
+.messageDiv {
+    
+}
+

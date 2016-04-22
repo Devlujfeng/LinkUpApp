@@ -59,9 +59,9 @@ public class LobbyResource {
         Set<String> keys = RoomContainer.getAllRoom().keySet();
         
         String [] rooms = keys.toArray(new String[keys.size()]);
-        for(int i=0; i < keys.size(); i++){
-            System.out.println(rooms[i]);
-        }
+//        for(int i=0; i < keys.size(); i++){
+//            System.out.println(rooms[i]);
+//        }
         for(int i=0; i < keys.size(); i++){
             builder.add(
             Json.createObjectBuilder()
