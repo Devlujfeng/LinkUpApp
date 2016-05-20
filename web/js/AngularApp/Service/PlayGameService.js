@@ -1,4 +1,4 @@
-PlayGameModule.service("PlayGameService", function ($http) {
+IndexAppModule.service("PlayGameService", function ($http) {
     var serviceAddress = 'api/';
     
     this.initGame = function () {
@@ -33,5 +33,32 @@ PlayGameModule.service("PlayGameService", function ($http) {
             }
         });
         return request;
+    };
+    
+    this.updateRoomPlayers = function(roomNo){
+        console.log(roomNo);
+        var request = $http.get('joinRoom',{
+            params: {roomNo: roomNo
+            }
+        });
+        return request;
+    };
+    this.getRoomPlayersByFresh = function(roomNo){
+      var request = $http.get('api/room/'+ roomNo + '/getRoomPlayersByFresh',{
+      });
+      return request;
+    };
+    
+    this.getMyInfo = function(){
+       var request = $http.get('api/user/getMyInfo');
+       return request;
+       };
+    this.onExit = function(){
+        $http.post(serviceAddress + 'user/logout');
+    };
+    
+    this.getFriendList = function(){
+            var request = $http.get(serviceAddress + 'user/getfriends');
+    return request;
     };
 });

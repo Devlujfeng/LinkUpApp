@@ -8,7 +8,10 @@ package llk.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.enterprise.context.ApplicationScoped;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -18,18 +21,31 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public class RoomContainer {
-    
+    static{
+//        SessionCounter sc = new SessionCounter();
+//        Timer timer = new Timer();
+//        timer.schedule( new TimerTask() {
+//            public void run() {
+//               sc.refreshSession();
+//            }
+//         }, 0, 60*100);
+    }
+    int roomid = 1;
+    HashMap<String, HttpSession> sessionList = new HashMap<>();
     HashMap<String, matchCore> roomList = new HashMap<>();
-    public String createGame(){
+    public String createGame(String roomName, String limitation, String userName ){
         try{
         System.out.println("Let me check");
-        Random r = new Random();
-        int x = r.nextInt(1000000);
-        String roomName = "Room" + x;
+        //Random r = new Random();
+        //int x = r.nextInt(1000000);
+        String roomNo = "RoomA" + roomid++;
         matchCore plateNew = new matchCore();
+        plateNew.setRoomName(roomName);
+        plateNew.setLimitation(limitation);
+        plateNew.setUserName(userName);
         plateNew.assignValue();
-        roomList.put(roomName, plateNew);
-        return roomName;
+        roomList.put(roomNo, plateNew);
+        return roomNo;
         }
         catch(Exception e){
             System.out.println("Problem occurred in creating room: "+ e.toString());
@@ -43,6 +59,7 @@ public class RoomContainer {
     public int [][] initGame(String roomID){
         try{
         matchCore gameObject = roomList.get(roomID);
+        
         return gameObject.plate;
         }
         catch(Exception e){
@@ -70,5 +87,13 @@ public class RoomContainer {
             return null;
         }
     }
-    
+    public void updateOnlinePlayers(String email,HttpSession userSession){
+        System.out.println("Login user updated");
+        sessionList.put(email, userSession);
+    }
+    public HashMap<String, HttpSession> getOnlinePlayers(){
+        System.out.println("pull out users list");
+        return sessionList;
+    }
+
 }

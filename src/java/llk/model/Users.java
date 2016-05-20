@@ -6,73 +6,68 @@
 package llk.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import javax.json.JsonObject;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 
 /**
  *
  * @author tictaclu
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
-    @NamedQuery(name = "Users.findByAccountName", query = "SELECT u FROM Users u WHERE u.accountName = :accountName"),
-    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
     @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
+    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
-    @NamedQuery(name = "Users.findByPoints", query = "SELECT u FROM Users u WHERE u.points = :points")})
+    @NamedQuery(name = "Users.findByScores", query = "SELECT u FROM Users u WHERE u.scores = :scores"),
+    @NamedQuery(name = "Users.findByPhotoIdentifier", query = "SELECT u FROM Users u WHERE u.photoIdentifier = :photoIdentifier")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "AccountName")
-    private String accountName;
-    @Size(max = 45)
-    @Column(name = "Name")
-    private String name;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 45)
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
     @Size(max = 45)
-    @Column(name = "Password")
+    @Column(name = "name")
+    private String name;
+    @Size(max = 45)
+    @Column(name = "password")
     private String password;
-    @Column(name = "Points")
-    private Integer points;
+    @Column(name = "scores")
+    private Integer scores;
+    @Size(max = 45)
+    @Column(name = "photoIdentifier")
+    private String photoIdentifier;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "email")
+    private Collection<Friends> friendsCollection;
 
     public Users() {
     }
 
-    public Users(String accountName) {
-        this.accountName = accountName;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Users(String email) {
+        this.email = email;
     }
 
     public String getEmail() {
@@ -83,6 +78,14 @@ public class Users implements Serializable {
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -91,18 +94,40 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-    public Integer getPoints() {
-        return points;
+    public Integer getScores() {
+        return scores;
     }
 
-    public void setPoints(Integer points) {
-        this.points = points;
+    public void setScores(Integer scores) {
+        this.scores = scores;
+    }
+
+    public String getPhotoIdentifier() {
+        if(photoIdentifier == null){
+            return "";
+        }
+        else{
+            return photoIdentifier;
+        }
+    }
+
+    public void setPhotoIdentifier(String photoIdentifier) {
+        this.photoIdentifier = photoIdentifier;
+    }
+
+    @XmlTransient
+    public Collection<Friends> getFriendsCollection() {
+        return friendsCollection;
+    }
+
+    public void setFriendsCollection(Collection<Friends> friendsCollection) {
+        this.friendsCollection = friendsCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (accountName != null ? accountName.hashCode() : 0);
+        hash += (email != null ? email.hashCode() : 0);
         return hash;
     }
 
@@ -113,15 +138,22 @@ public class Users implements Serializable {
             return false;
         }
         Users other = (Users) object;
-        if ((this.accountName == null && other.accountName != null) || (this.accountName != null && !this.accountName.equals(other.accountName))) {
+        if ((this.email == null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
             return false;
         }
         return true;
     }
-
+    public JsonObject toJson() {
+        return (Json.createObjectBuilder()
+                .add("emailaddr", email)
+                .add("name", name)
+                .add("scores", scores)
+                .add("photoIdentifier", photoIdentifier)
+                .build());
+    }
     @Override
     public String toString() {
-        return "llk.model.Users[ accountName=" + accountName + " ]";
+        return "llk.model.Users[ email=" + email + " ]";
     }
     
 }

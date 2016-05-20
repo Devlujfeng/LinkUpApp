@@ -19,16 +19,24 @@ public class LobbyTask implements Runnable {
 
     private ParticipantList participants;
     String gameId;
-
-    public LobbyTask(String GameId, ParticipantList p) {
+    String roomName;
+    String limitation;
+    String userName;
+public LobbyTask(String roomName,String limit, String userName,String GameId, ParticipantList p) {
         participants = p;
         gameId = GameId;
+             this.roomName = roomName;
+             this.limitation = limit;
+             this.userName = userName;
     }
     @Override
     public void run() {
         System.out.println(">>> broadcasting message: " + gameId);
         JsonObject json = Json.createObjectBuilder()
                 .add("GameId", gameId)
+                .add("roomName", roomName)
+                .add("limitation", limitation)
+                .add("createdBy", userName)
                 .build();
         OutboundEvent data = new OutboundEvent.Builder()
                 .data(JsonObject.class, json)

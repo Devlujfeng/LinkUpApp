@@ -4,20 +4,45 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/tictaclu/LinkUp/web/index.html</file>
-            <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/App/FetchLobbyApp.js</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/Service/IndexAppService.js</file>
             <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/Controller/PlayGameController.js</file>
-            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/NewMessageServlet.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/router.js</file>
             <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/Controller/FetchLobbyController.js</file>
-            <file>file:/home/tictaclu/LinkUp/web/room.html</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/lobby/getOnlinePlayersTask.java</file>
             <file>file:/home/tictaclu/LinkUp/src/java/llk/core/RoomContainer.java</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/model/Users.java</file>
             <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/Service/PlayGameService.js</file>
-            <file>file:/home/tictaclu/LinkUp/web/css/bootstrap.css</file>
-            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/RoomResource.java</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/EJBean/UserEBean.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/login.html</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/lobby/LobbyTask.java</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/core/SessionCounter.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/router.html</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/lobby/LobbyTaskServlet.java</file>
             <file>file:/home/tictaclu/LinkUp/src/java/llk/core/matchCore.java</file>
-            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/RoomTaskServlet.java</file>
-            <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/Service/FetchLobbyRoomService.js</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/lobby/getOnlinePlayersResource.java</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/FindRoomPlayersTask.java</file>
             <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/RoomTask.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/Service/FetchLobbyRoomService.js</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/freelancer.js</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/lobby/LobbyResource.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/font-awesome/scss/_variables.scss</file>
             <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/InitGameServlet.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/jqBootstrapValidation.js</file>
+            <file>file:/home/tictaclu/LinkUp/web/font-awesome/scss/_larger.scss</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/Controller/IndexAppController.js</file>
+            <file>file:/home/tictaclu/LinkUp/web/lobby.html</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/Auth/UserAuthResource.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/cbpAnimatedHeader.js</file>
+            <file>file:/home/tictaclu/LinkUp/web/font-awesome/less/larger.less</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/FindRoomPlayersResource.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/room.html</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/FindRoomPlayersTaskServlet.java</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/RoomResource.java</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/room/RoomTaskServlet.java</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/classie.js</file>
+            <file>file:/home/tictaclu/LinkUp/web/js/AngularApp/App/IndexApp.js</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/restful/lobby/getOnlinePlayersTaskServlet.java</file>
+            <file>file:/home/tictaclu/LinkUp/src/java/llk/util/JSONParam.java</file>
         </group>
     </open-files>
 </project-private>

@@ -17,7 +17,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
+import llk.model.Users;
 import org.glassfish.jersey.media.sse.OutboundEvent;
 
 @WebServlet("/newMessage")
@@ -42,13 +44,13 @@ public class NewMessageServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
-        
         String name = req.getParameter("username");
         String msg = req.getParameter("message");
         String chatname = req.getParameter("chatRoomId");
         System.out.println(name + ">>> " + msg+ ">>>"+ chatname);
-        
-        service.submit(new BroadcastMessageTask(name, msg, participants,chatname));
+        HttpSession session = req.getSession();
+        Users u = (Users)session.getAttribute("User");
+        service.submit(new BroadcastMessageTask(name, msg, participants,chatname,u));
         
         resp.setStatus(HttpServletResponse.SC_OK);
     }        

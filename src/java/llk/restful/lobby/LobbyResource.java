@@ -1,5 +1,8 @@
 package llk.restful.lobby;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Set;
 import javax.annotation.Resource;
 import javax.enterprise.concurrent.ManagedScheduledExecutorService;
@@ -13,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import llk.core.RoomContainer;
+import llk.core.matchCore;
 import llk.restful.ParticipantList;
 import org.glassfish.jersey.media.sse.EventOutput;
 import org.glassfish.jersey.media.sse.SseFeature;
@@ -31,10 +35,10 @@ public class LobbyResource {
      
     public Response connect() {
         
-         System.out.println(">>> new connection ");
+         System.out.println(">>> new connection lobby");
          EventOutput eo = new EventOutput();
          participants.add(eo);
-          System.out.println(">>> new connection 2");
+          System.out.println(">>> new connection 2 lobby");
          return (Response.ok(eo).build());
     }
     
@@ -57,15 +61,16 @@ public class LobbyResource {
         System.out.println("test");
         JsonArrayBuilder builder = Json.createArrayBuilder();
         Set<String> keys = RoomContainer.getAllRoom().keySet();
-        
+        HashMap<String, matchCore> roomList = RoomContainer.getAllRoom();
         String [] rooms = keys.toArray(new String[keys.size()]);
-//        for(int i=0; i < keys.size(); i++){
-//            System.out.println(rooms[i]);
-//        }
+        Arrays.sort(rooms);
         for(int i=0; i < keys.size(); i++){
             builder.add(
             Json.createObjectBuilder()
-                    .add("rooms",rooms[i])
+                    .add("GameId",rooms[i])
+                    .add("roomName", roomList.get(rooms[i]).getRoomName())
+                    .add("limitation", roomList.get(rooms[i]).getLimitation())
+                    .add("createdBy", roomList.get(rooms[i]).getUserName())
             );
         }
         return (builder.build());

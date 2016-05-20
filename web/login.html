@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="lib/jquery-2.1.4.js"></script>
+        <script src="lib/angular.min.js"></script>
+        
+        <script>
+            $(function(){
+                $("#submit").on("click",function(){
+                    var username = $("#accountName").val();
+                    
+                        $.ajax({
+                        url: "api/user/getmd5",
+                        data: { 
+                            "accountName": username
+                            
+                        },
+                        cache: false,
+                        type: "GET",
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(xhr) {
+                            console.log("error");
+                        }
+                        });
+                    });
+                });
+        </script>
+        
+    </head>
+    <body>
+        <div>TODO write content</div>
+     
+                 <input type="text" id="accountName" placeholder="Your name" size="10" value="">
+                
+                 <button id="submit">Submit</button>
+                 
+                 
+    </body>
+
+</html>

@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import llk.core.RoomContainer;
 import llk.restful.ParticipantList;
 
@@ -41,9 +42,14 @@ public class LobbyTaskServlet extends HttpServlet {
     
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) 
-            throws ServletException, IOException { 
-        String roomNo = RoomContainer.createGame();
-        service.submit(new LobbyTask(roomNo,participants));
+        throws ServletException, IOException { 
+        
+        String roomName = req.getParameter("roomName");
+        String limitation = req.getParameter("limitation");
+        String userName = req.getParameter("userName");
+        
+        String roomNo = RoomContainer.createGame(roomName,limitation,userName);
+        service.submit(new LobbyTask(roomName,limitation,userName,roomNo,participants));
         PrintWriter out = resp.getWriter();
         out.write(roomNo);
     }        

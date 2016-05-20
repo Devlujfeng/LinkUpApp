@@ -2,23 +2,59 @@
         background-color: beige;
 }
 .imgresize{
-    width: 4%;
+    width: 4.7%;
 }
 
 .imgclick{
-        transform: rotate(0deg);
+        transition-duration: 1000ms;
+        transition-timing-function: linear;
+        border: 2px solid black;
+
+}
+.imgclick:hover{
+        border-radius: 60px;    
+        transition-duration:300ms;
+}
+
+
+#img > .ng-animate {
     transition-duration: 1000ms;
     transition-property: all;
     transition-timing-function: linear;
 }
-.imgclick:hover{
-    vertical-align: middle;
-    transform: rotate(40deg);
-    transition-duration: 50ms;
-    transition-property: all;
-    transition-timing-function: linear;
-}
-.messageDiv {
-    
+
+
+#img > .ng-enter {
+  transition:0.5s linear all;
+  opacity:0;
 }
 
+/* The finishing CSS styles for the enter animation */
+#img > .ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+#img > .ng-leave {
+    opacity: 1.0;
+    transform: rotate(180deg);
+}
+#img > .ng-leave.ng-leave-active {
+    opacity: 0.0;
+    transform: rotate(0deg);
+}
+
+
+    #box {
+        width: 100px;
+        height: 100px;
+        border: 3px solid black;
+        transform: rotate(0deg);
+        transition-duration: 300ms;
+        transition-property: all;
+        transition-timing-function: linear;
+    }
+
+    #box:hover {
+        border-radius: 60px;
+        transform: rotate(360deg);
+    }

@@ -1,36 +1,335 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html ng-app="FetchLobbyRoomApp">
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="lib/jquery-2.1.4.js"></script>
-        <script src="lib/angular.min.js"></script>
-        <script src="lib/handlebars-v3.0.3.js"></script>
-        <script src="js/AngularApp/App/FetchLobbyApp.js"></script>
-        <script src="js/AngularApp/Service/FetchLobbyRoomService.js"></script>
-        <script src="js/AngularApp/Controller/FetchLobbyController.js"></script>
-        <script id="gameListTemplate" type="text/x-handlebars">
-           <div id="{{ gameId }}">
-            <h2 class="success">{{ gameId }} <button id="{{ gameId }}" onclick="joinGame(this)" class="btn btn-success" type="button" value="{{ gameId }}">JoinUs!</button></h2>
-           </div>
-        </script>
-                <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-    </head>
-    <body>
-        <div ng-controller="FetchLobbyRoomController">
-            <div id="gameId"></div>
-            <div ng-repeat="room in rooms">
-                <h2 class="success">{{room}} <button id="{{room}}" class="btn btn-success" ng-click="joinGame(this)" type="button" value="{{room}}">JoinUs!</button></h2>
+<html ng-app="IndexApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>LinkUp OnlineGame</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/freelancer.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+</head>
+<body id="page-top" class="index" ng-controller="IndexAppController" >
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="#page-top">LinkUp</a>
+
             </div>
-        <br>
-        <button ng-click="createNewGame()">CreateRoom</button>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#Gamerule">Game Rules</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#SignUp">Sign Up</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#signIn">Sign In</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <br>
-    </body>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                  <div class="intro-text">
+
+                    <span class="name">LinkUp Online</span>
+                    <img src="img/portfolio/icon.png" />
+
+                    <span class="skills">Game With Friends - Chat With Friends - Have Fun</span>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Portfolio Grid Section -->
+    <section id="Gamerule">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Game Rules</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="">
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="">Rule No.1</i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/gamephoto.png" class="img-responsive" alt="" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="">Rule No.2</i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/gamephoto.png" class="img-responsive" alt="" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                               <i class="">Rule No.3</i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/gamephoto.png" class="img-responsive" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    
+    <section class="success" id="SignUp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>SignUp</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+              <div class="container text-center">
+                <div class="col-sm-2 col-lg-4"></div>
+                      <div class="col-sm-8 col-xs-12 col-lg-4">
+                      <label for="inputEmail" class="sr-only">Email address</label>
+                      <input ng-focus="focus=true" type="text" ng-model="email" class="form-control" placeholder="Email Address">
+                      <label for="inputPassword" class="sr-only">Password</label>
+                      <input ng-focus="focus=true" type="password" ng-model="password" id="inputPassword" class="form-control" placeholder="Password">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                      </div>
+                      <div ng-class="{ myFocus: focus}" class="col-sm-12 indexStatusColor">{{status}}</div>
+                      <button ng-click="login()" class="btn btn-lg btn-outline"> Sign Up</button>
+                      <button  class="btn btn-lg btn-outline"> ForgetPassword?</button>
+                    </div>
+              </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="signIn">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>SignIn</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                    <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                    <form name="sentMessage" id="contactForm" novalidate>
+                        <div class="row control-group ">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>AccountName</label>
+                                <input ng-focus="Regfocus=true" ng-model="register.accountName" type="text" class="form-control" placeholder="Account Name" id="accountName" required data-validation-required-message="Please enter your name.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Email Address</label>
+                                <input ng-focus="Regfocus=true" ng-model="register.email" type="text" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Password</label>
+                                <input ng-focus="Regfocus=true" ng-model="register.passwd" type="password" class="form-control" placeholder="Password" id="phone" required data-validation-required-message="Please enter your phone number.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+                        
+                        <div id="success" class="text-center">
+                        
+                        <div ng-class="{ myFocus: Regfocus }" class="col-sm-12 indexStatusColor">{{RegStatus}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 text-center">
+                                <button type="submit" ng-click="createNewUser()" class="btn btn-success btn-lg">Sign In</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                        <h3>Location</h3>
+                        <p>InsightData Org<br>Singapore, Clementi</p>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>Around the Web</h3>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>About this Game</h3>
+                        <p>J2EE, MYSQL, ANGULARJS <br><a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright InsightData Website 2016
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visible-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <!-- Portfolio Modals -->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>RULES</h2>
+                            <hr class="star-primary">
+                            <img src="img/portfolio/gamephoto.png" class="img-responsive img-centered" alt="">
+                            <p>
+                                连连看游戏 ，只要将相同花色的两张牌用三根以内的直线连在一起就可以消除， 规则简单容易上手 。 游戏速度节奏快，画面清晰可爱 ， 适合以 MM 为主心细的玩家 。 丰富的道具和公共模式的加入 ， 增强游戏的竞争性。多样式的地图，使玩家在各个游戏水平都可以寻找到挑战的目标，长期地保持游戏的新鲜感。使用新颖的连击积分规则，使游戏玩家在体会连击的快感后，同时对自己的游戏速度，更有挑战性和追求极速的欲望。
+
+                                    三．基本规则
+
+                                    概要
+
+                                    玩家可以将 2 个相同图案的对子连接起来，连接线不多于 3 根直线，就可以成功将对子消除。
+
+                                    操作
+
+                                    第一次使用鼠标点击棋盘中的棋子，该棋子此时为“被选中”，以特殊方式显示；再次以鼠标点击其他棋子，若该棋子与被选中的棋子图案相同，且把第一个棋子到第二个棋子连起来，中间的直线不超过 3 根，则消掉这一对棋子，否则第一颗棋子恢复成未被选中状态，而第二颗棋子变成被选中状态
+
+                                    胜利条件 :
+
+                                    ? 将棋盘上面的对子全部消除掉。按消除的数量排列名次。
+                                    ? 其他玩家都输掉了。
+
+                                    失败条件 :
+
+                                    ? 每个玩家选择牌的时间为 30 秒，超过时间而未消除一对的玩家以判为输掉。
+                                    ? 有一个玩家将所有的牌都全部消掉。
+
+                                    计分规则：
+
+                                    每次得分附加分数为连攻击的分数。每次得分只统计最大连攻击数。
+                                    最大得分： 60+108=168 分
+                                    经常性得分： 12+18=30 分
+
+                                    使用道具：
+
+                                    道具分为两种：
+
+                                    对自己使用的：将鼠标移到道具上面，点击左键。
+                                    对其他玩家使用：将鼠标移到道具上面，点击左键。就会激活道具，鼠标处会出现道具的图标。只要再将鼠标移到你想对其使用道具的人的游戏池上，点击右键就可以对其使用道具。 
+                            </p>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/freelancer.js"></script>
+    
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-animate.js"></script>
+    <script src="js/AngularApp/App/IndexApp.js"></script>
+    <script src="js/AngularApp/Service/IndexAppService.js"></script>
+    <script src="js/AngularApp/Controller/IndexAppController.js"></script>
+</body>
+
 </html>

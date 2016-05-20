@@ -7,6 +7,7 @@ package llk.core;
 
 import java.util.HashMap;
 import javax.jms.Session;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -16,8 +17,21 @@ import javax.jms.Session;
 public class matchCore {
     int plate[][] = new int[8][21];
     int counter = 1;
+    private String roomName;
+    private String limitation;
+    private String userName;
     HashMap<Integer, Boolean> userCounter = new HashMap<Integer, Boolean>();
+    HashMap<String, HttpSession> roomSessionList = new HashMap<>();
     
+    public void updateRoomPlayers(String email,HttpSession userSession){
+        System.out.println("Login user updated");
+        roomSessionList.put(email, userSession);
+    }
+    public HashMap<String, HttpSession> getRoomPlayers(){
+        System.out.println("pull out users list");
+        return roomSessionList;
+    }
+
     public void assignValue(){
         for(int i = 0; i < plate.length; i++){
             for(int j=0; j< plate[i].length; j++){
@@ -43,7 +57,7 @@ public class matchCore {
         if(plate[A[0]][A[1]] == plate[B[0]][B[1]]){
          plate[A[0]][A[1]] = 0;
          plate[B[0]][B[1]] = 0;
-         printOut();
+         //printOut();
             System.out.println("Successfully Match");
          userCounter.put(counter, true);
         }
@@ -57,7 +71,7 @@ public class matchCore {
         System.out.println(B[0]+","+B[1]+"--value:"+plate[B[0]][B[1]]);
         //if A B in the same horizontal line
         if(A[0] == B[0] && A[1] != B[1]){
-             int diffHori = A[1] - B[1];
+                int diffHori = A[1] - B[1];
              
             for(int i = 0; i < plate.length; i++){
                 if(plate[i][A[1]] == 0 && diffHori < 0 && plate[i][A[1]-diffHori] == 0){
@@ -67,7 +81,7 @@ public class matchCore {
                     if(diff1 > 0){
                         for(int j = 1; j < diff1; j++){
                             sum += plate[A[0]+j][A[1]];
-                            sum += plate[B[0]+j][A[1]];
+                            sum += plate[i][A[1]-diffHori+j];
                         }
                     }
                     else if(diff1 < 0){
@@ -80,12 +94,12 @@ public class matchCore {
                             sum += plate[i][A[1]+k];
                     }
                     if(sum == 0){
-                         System.out.println("2 Corner getting into link20");
+                         System.out.println("if A B in the same horizontal line 2 Corner getting into link20");
                         linkToZero(A,B);
                         break;
                     }
                     else{
-                         System.out.println("Two Corner : Something stopped the path. diffHori < 0 ");
+                         System.out.println("if A B in the same horizontal line Two Corner : Something stopped the path. diffHori < 0 ");
                     }
                 }
                 if(plate[i][A[1]] == 0 && diffHori > 0 && plate[i][A[1]-diffHori] == 0){
@@ -95,7 +109,7 @@ public class matchCore {
                     if(diff1 > 0){
                         for(int j = 1; j < diff1; j++){
                             sum += plate[A[0]+j][A[1]];
-                            sum += plate[B[0]+j][A[1]];
+                            sum += plate[B[0]+j][B[1]];
                         }
                     }
                     else if(diff1 < 0){
@@ -108,12 +122,12 @@ public class matchCore {
                             sum += plate[i][A[1]-diffHori+k];
                     }
                     if(sum == 0){
-                        System.out.println("2 Corner getting into link20");
+                        System.out.println("if A B in the same horizontal line 2 Corner getting into link20");
                         linkToZero(A,B);
                         break;
                     }
                     else{
-                         System.out.println("Two Corner : Something stopped the path. diffHori < 0 ");
+                         System.out.println("if A B in the same horizontal line Two Corner : Something stopped the path. diffHori < 0 ");
                     }
                 }
             } 
@@ -143,12 +157,12 @@ public class matchCore {
                             sum += plate[A[0]+k][i];
                     }
                     if(sum == 0){
-                         System.out.println("2 Corner getting into link20");
+                         System.out.println("if A B in the same Vertical line 2 Corner getting into link20");
                         linkToZero(A,B);
                         break;
                     }
                     else{
-                         System.out.println("Two Corner : Something stopped the path. diffHori < 0 ");
+                         System.out.println("if A B in the same Vertical line Two Corner : Something stopped the path. diffHori < 0 ");
                     }
                 //
                 }
@@ -173,12 +187,12 @@ public class matchCore {
                             sum += plate[A[0]-diffVert+k][i];
                     }
                     if(sum == 0){
-                         System.out.println("2 Corner getting into link20");
+                         System.out.println("if A B in the same Vertical line 2 Corner getting into link20");
                         linkToZero(A,B);
                         break;
                     }
                     else{
-                         System.out.println("Two Corner : Something stopped the path. diffHori < 0 ");
+                         System.out.println("if A B in the same Vertical line Two Corner : Something stopped the path. diffHori < 0 ");
                     }
                 //
                 }
@@ -279,7 +293,7 @@ public class matchCore {
                                    sum += plate[A[0]][i+j];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i+k];
+                                   sum += plate[A[0]-diffVert][i+k];
                                }
                                for(int l = 1; l < diffVert; l++){
                                    sum += plate[A[0]-diffHori+l][i];
@@ -301,7 +315,7 @@ public class matchCore {
                                    sum += plate[A[0]][i-j];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i-k];
+                                   sum += plate[A[0]-diffVert][i-k];
                                }
                                for(int l = 1; l < diffVert; l++){
                                    sum += plate[A[0]-diffHori+l][i];
@@ -320,7 +334,7 @@ public class matchCore {
                                int diffToA =  A[1] - i;
                                int diffToB =  i - B[1];
                                for(int j = 1; j < diffToA; j++){
-                                   sum += plate[A[0]][i+j];
+                                   sum += plate[A[0]][i-j];
                                }
                                for(int k = 1; k < diffToB; k++){
                                    sum += plate[A[0]-diffHori][i+k];
@@ -399,11 +413,11 @@ public class matchCore {
                            else if(i > A[0] && B[0] > i){
                                int diffToA =  A[0] - i;
                                int diffToB =  i - B[0];
-                               for(int j = 1; j < diffToA; j++){
-                                   sum += plate[i+j][A[1]];
+                               for(int j = 1; j < diffToA*-1; j++){
+                                   sum += plate[i-j][A[1]];
                                }
-                               for(int k = 1; k < diffToB; k++){
-                                   sum += plate[i-k][A[1]-diffHori];
+                               for(int k = 1; k < diffToB*-1; k++){
+                                   sum += plate[i+k][A[1]-diffHori];
                                }
                                for(int l = 1; l < diffHori; l++){
                                    sum += plate[i][A[1]-diffHori+l];
@@ -431,7 +445,7 @@ public class matchCore {
                                    sum += plate[A[0]][i+j];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i+k];
+                                   sum += plate[A[0]-diffVert][i+k];
                                }
                                for(int l = 1; l < diffVert*-1; l++){
                                    sum += plate[A[0]+l][i];
@@ -453,7 +467,7 @@ public class matchCore {
                                    sum += plate[A[0]][i-j];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i-k];
+                                   sum += plate[A[0]-diffVert][i-k];
                                }
                                for(int l = 1; l < diffVert*-1; l++){
                                    sum += plate[A[0]+l][i];
@@ -475,7 +489,7 @@ public class matchCore {
                                    sum += plate[A[0]][i+j];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i+k];
+                                   sum += plate[A[0]-diffVert][i-k];
                                }
                                for(int l = 1; l < diffVert*-1; l++){
                                    sum += plate[A[0]+l][i];
@@ -617,14 +631,14 @@ public class matchCore {
                                     System.out.println("2 corner - A 在B 的左下方 横向遍历 - i > B[1] Something Stopped The Path");
                                 }
                            }
-                           else if(i > B[1] && A[1] > i){
+                           else if(i < B[1] && A[1] < i){
                                int diffToA =  A[1] - i;
                                int diffToB =  i - B[1];
-                               for(int j = 1; j < diffToA; j++){
-                                   sum += plate[A[0]][i+j];
+                               for(int j = 1; j < diffToA*-1; j++){
+                                   sum += plate[A[0]][i-j];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i+k];
+                                   sum += plate[A[0]-diffVert][i+k];
                                }
                                for(int l = 1; l < diffVert; l++){
                                    sum += plate[A[0]-diffVert+l][i];
@@ -647,7 +661,7 @@ public class matchCore {
                     for(int i = 0; i < plate.length; i++){
                             if(plate[i][A[1]] == 0 && plate[i][A[1]-diffHori] == 0){
                            int sum  = 0;
-                           if(i < B[0]){
+                           if(i < A[0]){
                                int diffToA = A[0] - i;
                                int diffToB = B[0] - i;
                                for(int j = 1; j < diffToA; j++){
@@ -670,7 +684,7 @@ public class matchCore {
                                 }
                                
                            }
-                           else if(i > A[0]){
+                           else if(i > B[0]){
                                int diffToA =  i - A[0];
                                int diffToB =  i - B[0];
                                for(int j = 1; j < diffToA; j++){
@@ -692,14 +706,14 @@ public class matchCore {
                                     System.out.println("2 corner - A 在 B 的左上方 纵向遍历 - i > A[0] Something Stopped The Path");
                                 }
                            }
-                           else if(i > B[0] && A[0] > i){
+                           else if(i < B[0] && A[0] < i){
                                int diffToA =  A[0] - i;
                                int diffToB =  i - B[0];
                                for(int j = 1; j < diffToA; j++){
-                                   sum += plate[i+j][A[1]];
+                                   sum += plate[i-j][A[1]];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[i-k][A[1]-diffHori];
+                                   sum += plate[i+k][A[1]-diffHori];
                                }
                                for(int l = 1; l < diffHori*-1; l++){
                                    sum += plate[i][A[1]+l];
@@ -727,7 +741,7 @@ public class matchCore {
                                    sum += plate[A[0]][i+j];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i+k];
+                                   sum += plate[A[0]-diffVert][i+k];
                                }
                                for(int l = 1; l < diffVert*-1; l++){
                                    sum += plate[A[0]][i+l];
@@ -749,7 +763,7 @@ public class matchCore {
                                    sum += plate[A[0]][i-j];
                                }
                                for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i-k];
+                                   sum += plate[A[0]-diffVert][i-k];
                                }
                                for(int l = 1; l < diffVert*-1; l++){
                                    sum += plate[A[0]+l][i];
@@ -764,26 +778,26 @@ public class matchCore {
                                     System.out.println("2 corner - A 在 B 的左上方 横向遍历 - i > B[1] Something Stopped The Path");
                                 }
                            }
-                           else if(i > B[1] && A[1] > i){
+                           else if(i < B[1] && A[1] < i){
                                int diffToA =  A[1] - i;
                                int diffToB =  i - B[1];
-                               for(int j = 1; j < diffToA; j++){
-                                   sum += plate[A[0]][i+j];
+                               for(int j = 1; j < diffToA*-1; j++){
+                                   sum += plate[A[0]][i-j];
                                }
-                               for(int k = 1; k < diffToB; k++){
-                                   sum += plate[A[0]-diffHori][i+k];
+                               for(int k = 1; k < diffToB*-1; k++){
+                                   sum += plate[A[0]-diffVert][i+k];
                                }
                                for(int l = 1; l < diffVert*-1; l++){
-                                   sum += plate[A[0]][i+l];
+                                   sum += plate[A[0]+l][i];
                                }
                                 if(sum == 0){
-                                     System.out.println("2 corner - A 在 B 的左上方 横向遍历 - i > B[1] && A[1] > i getting into link20");
+                                     System.out.println("2 corner - A 在 B 的左上方 横向遍历 - i < B[1] && A[1] < i getting into link20");
                                     linkToZero(A,B);
                                     break;
                                 }
                                 else{
                                     //CALL TO NEXT METHOD TO VERIFY
-                                    System.out.println("2 corner - A 在 B 的左上方 横向遍历 - i > B[1] && A[1] > i Something Stopped The Path");
+                                    System.out.println("2 corner - A 在 B 的左上方 横向遍历 - i < B[1] && A[1] < i Something Stopped The Path");
                                 }
                            }
                         }
@@ -803,35 +817,35 @@ public class matchCore {
          if(diffHori > 0){
             int sumHori = 0;
             for(int i = 1; i < diffHori; i++){
-                   sumHori =+ plate[A[0]][i];
+                   sumHori = sumHori + plate[D[0]][D[1]-i];
                }
             // D is at down of B
              if(diffVert > 0){
                  int sumVert = 0;
                  for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[B[0]+i][B[1]];
+                   sumVert = sumVert + plate[A[0]][A[1]+i];
                }
                if(sumHori == 0 && sumVert == 0){
                    linkToZero(A,B);
-                   System.out.println("1 Corner for D getting into link20");
+                   System.out.println("diffHori > 0 diffVert > 0 Corner for D getting into link20");
                }
                else{
-                   System.out.println("Something stopped the path. Go to double corner check");
+                   System.out.println("diffHori > 0 diffVert > 0 Something stopped the path. Go to double corner check");
                    logicHub("GoToTwoCorner", A, B);
                }
              }
              // D is at up of B
              else if(diffVert < 0){
                   int sumVert = 0;
-                 for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[D[0]+i][D[1]];
+                 for(int i = 1; i < diffVert*-1; i++){
+                   sumVert = sumVert + plate[A[0]][A[1]+i];
                }
                if(sumHori == 0 && sumVert == 0){
                    linkToZero(A,B);
-                   System.out.println("1 Corner for D getting into link20");
+                   System.out.println("diffHori > 0 diffVert < 0 Corner for D getting into link20");
                }
                else{
-                  System.out.println("Something stopped the path. Go to double corner check");
+                  System.out.println("diffHori > 0 diffVert < 0 Something stopped the path. Go to double corner check");
                   logicHub("GoToTwoCorner", A, B);
                }
              }
@@ -839,43 +853,43 @@ public class matchCore {
          // D is at the left of A
          else{
             int sumHori = 0;
-            for(int i = 1; i < diffHori; i++){
-                   sumHori =+ plate[D[0]][D[1]+i];
+            for(int i = 1; i < diffHori*-1; i++){
+                   sumHori = sumHori + plate[D[0]][D[1]+i];
                }
             // D is at down of B
              if(diffVert > 0){
                  int sumVert = 0;
                  for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[B[0]][B[1]+i];
+                   sumVert = sumVert + plate[A[0]][A[1]+i];
                }
                if(sumHori == 0 && sumVert == 0){
-                   System.out.println("1 Corner for D getting into link20");
+                   System.out.println("diffHori < 0 diffVert > 0 Corner for D getting into link20");
                    linkToZero(A,B);
                }
                else{
-                  System.out.println("Something stopped the path. Go to double corner check");
+                  System.out.println("diffHori < 0 diffVert > 0 Something stopped the path. Go to double corner check");
                   logicHub("GoToTwoCorner", A, B);
                }
              }
              // D is at up of B
              else if(diffVert < 0){
                   int sumVert = 0;
-                 for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[D[0]+i][D[1]];
+                 for(int i = 1; i < diffVert*-1; i++){
+                   sumVert = sumVert + plate[A[0]-i][A[1]];
                }
                if(sumHori == 0 && sumVert == 0){
-                   System.out.println("1 Corner for D getting into link20");
+                   System.out.println("diffHori < 0 diffVert < 0  Corner for D getting into link20");
                    linkToZero(A,B);
                }
                else{
-                   System.out.println("Something stopped the path. Go to double corner check");
+                   System.out.println("diffHori < 0 diffVert < 0 Something stopped the path. Go to double corner check");
                    logicHub("GoToTwoCorner", A, B);
                }
              }
          }
     }
      else{
-         System.out.println("The Point is not 0");
+         System.out.println("oneCornerForD The Point is not 0");
          System.out.println(plate[D[0]][D[1]]+"\n"+D[0]+",D,"+D[1]);
      }
     }
@@ -892,35 +906,35 @@ public class matchCore {
              
             int sumHori = 0;
             for(int i = 1; i < diffHori; i++){
-                   sumHori =+ plate[A[0]][i];
+                   sumHori = sumHori + plate[C[0]][C[1]- i];
                }
             // C is at down of B
              if(diffVert > 0){
                  int sumVert = 0;
                  for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[B[0]+i][B[1]];
+                   sumVert = sumVert + plate[B[0]+i][B[1]];
                }
                if(sumHori == 0 && sumVert == 0){
-                    System.out.println("1 Corner getting into link20");
+                    System.out.println(" oneCorner diffHori > 0 diffVert > 0 getting into link20");
                    linkToZero(A,B);
                }
                else{
-                   System.out.println("Something stopped the path.Check for Point D");
+                   System.out.println("diffHori > 0 diffVert > 0 Something stopped the path.Check for Point D");
                    oneCornerForD(A,B);
                }
              }
              // C is at up of B
              else if(diffVert < 0){
                   int sumVert = 0;
-                 for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[C[0]+i][C[1]];
+                 for(int i = 1; i < diffVert*-1; i++){
+                   sumVert = sumVert + plate[C[0]+i][C[1]];
                }
                if(sumHori == 0 && sumVert == 0){
-                   System.out.println("1 Corner getting into link20");
+                   System.out.println("diffHori > 0 diffVert < 0 getting into link20");
                    linkToZero(A,B);
                }
                else{
-                   System.out.println("Something stopped the path.Check for Point D");
+                   System.out.println("diffHori > 0 diffVert < 0 Something stopped the path.Check for Point D");
                    oneCornerForD(A,B);
                }
              }
@@ -928,43 +942,43 @@ public class matchCore {
          // C is at the left of A
          else{
             int sumHori = 0;
-            for(int i = 1; i < diffHori; i++){
-                   sumHori =+ plate[C[0]][C[1]+i];
+            for(int i = 1; i < diffHori*-1; i++){
+                   sumHori = sumHori + plate[C[0]][C[1]+i];
                }
             // C is at down of B
              if(diffVert > 0){
                  int sumVert = 0;
                  for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[B[0]+i][B[1]];
+                   sumVert = sumVert + plate[C[0]-i][C[1]];
                }
                if(sumHori == 0 && sumVert == 0){
-                   System.out.println("1 Corner getting into link20");
+                   System.out.println("diffHori < 0 diffVert > 0 getting into link20");
                    linkToZero(A,B);
                }
                else{
-                   System.out.println("Something stopped the path.Check for Point D");
+                   System.out.println("diffHori < 0 diffVert > 0 Something stopped the path.Check for Point D");
                    oneCornerForD(A,B);
                }
              }
              // C is at up of B
              else if(diffVert < 0){
                   int sumVert = 0;
-                 for(int i = 1; i < diffVert; i++){
-                   sumVert =+ plate[C[0]+i][C[1]];
+                 for(int i = 1; i < diffVert*-1; i++){
+                   sumVert = sumVert + plate[C[0]+i][C[1]];
                }
                if(sumHori == 0 && sumVert == 0){
-                   System.out.println("1 Corner getting into link20");
+                   System.out.println("diffHori < 0 diffVert < 0 getting into link20");
                    linkToZero(A,B);
                }
                else{
-                   System.out.println("Something stopped the path.Check for Point D");
+                   System.out.println("diffHori < 0 diffVert < 0 Something stopped the path.Check for Point D");
                    oneCornerForD(A,B);
                }
              }
          }
     }
      else{
-         System.out.println("The Point is not 0");
+         System.out.println("oneCorner The Point is not 0");
          System.out.println(plate[C[0]][C[1]]+"\n"+C[0]+",C,"+C[1]);
          oneCornerForD(A,B);
      }
@@ -983,15 +997,16 @@ public class matchCore {
                     int diff = A[1] - B[1];
                     int sum = 0;
                     for(int i = 1; i < diff; i++){
-                        sum =+ plate[B[0]][B[1]+i];
+                        sum = sum + plate[B[0]][B[1]+i];
                     }
+                    System.out.println(">>>>"+sum);
                     if(sum == 0){
                          System.out.println("no Corner getting into link20");
                         linkToZero(A,B);
                     }
                     else{
                         //CALL TO NEXT METHOD TO VERIFY 
-                        System.out.println("Something Stopped The Path");
+                        System.out.println(" A[0] == B[0] A[1] > B[1] Something Stopped The Path");
                         logicHub("GoToOneCorner",A,B);
                     }
                 }
@@ -999,15 +1014,16 @@ public class matchCore {
                     int diff = B[1] - A[1];
                     int sum = 0;
                     for(int i = 1; i < diff; i++){
-                        sum =+ plate[A[0]][i];
+                        sum = sum + plate[A[0]][A[1]+i];
                     }
+                    System.out.println("sum: >>>"+sum);
                     if(sum == 0){
                          System.out.println("NO Corner getting into link20");
                         linkToZero(A,B);
                     }
                     else{
                         //CALL TO NEXT METHOD TO VERIFY
-                        System.out.println("Something Stopped The Path");
+                        System.out.println("A[0] == B[0] A[1] <= B[1] Something Stopped The Path");
                         logicHub("GoToOneCorner",A,B);
                     }
                 }
@@ -1018,7 +1034,7 @@ public class matchCore {
                     int diff = A[0] - B[0];
                     int sum = 0;
                     for(int i = 1; i < diff; i++){
-                        sum =+ plate[B[0]+i][B[1]];
+                        sum = sum + plate[B[0]+i][B[1]];
                     }
                     if(sum == 0){
                          System.out.println("NO Corner getting into link20");
@@ -1026,7 +1042,7 @@ public class matchCore {
                     }
                     else{
                         //CALL TO NEXT METHOD TO VERIFY
-                        System.out.println("Something Stopped The Path");
+                        System.out.println("A[1] == B[1] A[0] > B[0] Something Stopped The Path");
                         logicHub("GoToOneCorner",A,B);
                     }
                 }
@@ -1034,7 +1050,7 @@ public class matchCore {
                     int diff = B[0] - A[0];
                     int sum = 0;
                     for(int i = 1; i < diff; i++){
-                        sum =+ plate[A[0]+i][A[1]];
+                        sum = sum + plate[A[0]+i][A[1]];
                     }
                     if(sum == 0){
                          System.out.println("NO Corner getting into link20");
@@ -1042,7 +1058,7 @@ public class matchCore {
                     }
                     else{
                         //CALL TO NEXT METHOD TO VERIFY
-                        System.out.println("Something Stopped The Path");
+                        System.out.println("A[1] == B[1] A[0] <= B[0]Something Stopped The Path");
                         logicHub("GoToOneCorner",A,B);
                     }
                 }
@@ -1074,109 +1090,47 @@ public class matchCore {
         }
         
     }
-    
-//    public static void main(String [] argis){
-//        matchCore matchCore = new matchCore();
-//        matchCore.assignValue();
-        //A B noCorner
-//        matchCore.plate[1][2] = 3;
-//        matchCore.plate[1][3] = 3;
-//        //A0 B0 oneCorner
-//        matchCore.plate[2][2] = 4;
-//        matchCore.plate[1][4] = 4;
-//        //A1 B1 oneCorner
-//        matchCore.plate[3][2] = 5;
-//        matchCore.plate[1][5] = 5;
-//        //A2 B2 oneCorner
-//        matchCore.plate[4][2] = 6;
-//        matchCore.plate[1][6] = 6;
-//        //A3 B3 twoCorner under same vertical or horizontal
-//        matchCore.plate[2][19] = 7;
-//        matchCore.plate[5][19] = 7;
-//        
-//        matchCore.plate[3][19] = 0;
-//        matchCore.plate[4][19] = 0;
-//        matchCore.plate[3][18] = 0;
-//        matchCore.plate[2][18] = 0;
-//        int[] A = {1,2};
-//        int[] B = {1,3};
-//        
-//        int[] A0 = {2,2};
-//        int[] B0 = {1,4};
-//        
-//        int[] A1 = {3,2};
-//        int[] B1 = {1,5};
-//        
-//        int[] A2 = {4,2};
-//        int[] B2 = {1,6};
-//        
-//        int[] A3 = {2,19};
-//        int[] B3 = {5,19};
-//        // A 在 B 的右下方
-//        matchCore.plate[2][3] = 8;
-//        matchCore.plate[1][1] = 8;
-//        matchCore.plate[4][3] = 8;
-//        matchCore.plate[2][1] = 8;
-//        int[] A4 = {2,3};
-//        int[] B4 = {1,1};
-//        
-//        int[] A5 = {4,3};
-//        int[] B5 = {2,1};
-//        // A 在 B 的右上方
-//        matchCore.plate[2][4] = 9;
-//        matchCore.plate[4][1] = 9;
-//        matchCore.plate[2][5] = 9;
-//        matchCore.plate[3][1] = 9;
-//        int[] A6 = {2,4};
-//        int[] B6 = {3,1};
-//        
-//        int[] A7 = {2,5};
-//        int[] B7 = {4,1};
-//        // A 在 B 的左下方
-//        matchCore.plate[5][1] = 1;
-//        matchCore.plate[3][6] = 1;
-//        matchCore.plate[5][2] = 1;
-//        matchCore.plate[2][6] = 1;
-//        int[] A8 = {5,1};
-//        int[] B8 = {3,6};
-//        
-//        int[] A9 = {5,2};
-//        int[] B9 = {2,6};
-//        // A 在 B 的左上方
-//        matchCore.plate[6][19] = 2;
-//        matchCore.plate[2][17] = 2;
-//        matchCore.plate[2][16] = 2;
-//        matchCore.plate[4][18] = 2;
-//        int[] A10 = {2,17};
-//        int[] B10 = {6,19};
-//        
-//        int[] A11 = {2,16};
-//        int[] B11 = {4,18};
-//        
-//        
-//        //random test
-//        int[] A12 = {5,17};
-//        int[] B12 = {1,6};
-//        
-//        matchCore.printOut();
-//        matchCore.noCorner(A, B);
-//        matchCore.oneCorner(A0, B0);
-//        matchCore.oneCorner(A1, B1);
-//        matchCore.oneCorner(A2, B2);
-//        matchCore.twoCorner(A3, B3);
-//        // A 在 B 的右下方
-//        matchCore.twoCorner(A4, B4);
-//        matchCore.twoCorner(A5, B5);
-//        // A 在 B 的右上方
-//        matchCore.twoCorner(A6, B6);
-//        matchCore.twoCorner(A7, B7);
-//        // A 在 B 的左下方
-//        matchCore.twoCorner(A8, B8);
-//        matchCore.twoCorner(A9, B9);
-//        // A 在 B 的左上方
-//        matchCore.twoCorner(A10, B10);
-//        matchCore.twoCorner(A11, B11);
-//        // random
-//        matchCore.noCorner(A12, B12);
-//    }
+
+    /**
+     * @return the roomName
+     */
+    public String getRoomName() {
+        return roomName;
+    }
+
+    /**
+     * @param roomName the roomName to set
+     */
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    /**
+     * @return the limitation
+     */
+    public String getLimitation() {
+        return limitation;
+    }
+
+    /**
+     * @param limitation the limitation to set
+     */
+    public void setLimitation(String limitation) {
+        this.limitation = limitation;
+    }
+
+    /**
+     * @return the userName
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * @param userName the userName to set
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
 }

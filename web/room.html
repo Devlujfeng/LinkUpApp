@@ -4,45 +4,191 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html ng-app="PlayGameApp">
+<html ng-app="IndexApp">
     <head>
-        <title>TODO supply a title</title>
+        <title>LinkUp Room</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="lib/jquery-2.1.4.js"></script>
-        <script src="lib/angular.min.js"></script>
-        <script src="lib/handlebars-v3.0.3.js"></script>
-        <script src="js/AngularApp/App/PlayGameApp.js"></script>
-        <script src="js/AngularApp/Service/PlayGameService.js"></script>
-        <script src="js/AngularApp/Controller/PlayGameController.js"></script>
-        <script id="plateTemplate" type="text/x-handlebars">
-           <div id="{{ gameId }}">
-            <h2 class="success">{{ gameId }} <button id="{{ gameId }}" class="btn btn-success" type="button" value="{{ gameId }}">JoinUs!</button></h2>
-           </div>
-        </script>
         <link href="css/room.css" rel='stylesheet' type='text/css' />
-        <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+        <link href="css/bootstrap.min.css" rel="stylesheet">    
+        <link href="css/freelancer.css" rel="stylesheet">
+        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/default.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
-    <body class="bc">
-        
-        <div class="" ng-controller="PlayGameController">
-                <h1 id="roomNumber">{{roomNumber}}</h1>
-            <span ng-repeat="value in Values track by $index">
-                <img class="imgresize imgclick" src="img/{{value}}.gif" id="{{$index}}" ng-bind="value" ng-click="updateSelection(this)">
-                <br ng-if="!(($index + 1) % 21)" />
-            </span>
-            <div class="col-lg-12">
-                <div class="col-lg-4"></div>
-            <div class="messageDiv col-lg-4">
-                 <textarea class="form-control" id="messages2" cols="20" rows="10" readonly>
-                 </textarea>
-                <input ng-model="userName" type="text" id="name2" class="form-control" placeholder="Your name" size="10" value="">
-                 <input ng-model="message" type="text" id="msg2" class="form-control" placeholder="Your message" size="30">
-                 <div class="b-btn">
-                 <button ng-click="sendMessage()" class="btn-danger" id="sendBtn">Send</button>
-                 </div>
+    <body id="page-top" ng-controller="PlayGameController">
+       <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="#page-top">LinkUp</a>
+
             </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right ul">
+                    <li class="page-scroll">
+                        <a ng-click="onExit()" style="cursor:pointer; font-size:15px">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+        </nav>
+        <header>
+            <div class="containerLobby">
+                <div class="row">
+                    <div class="col-lg-12">
+                      <div class="intro-text">
+
+
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        
+        <div>
+            <h3 class="text-center" id="roomNumber" ng-bind="roomNumber"></h3>
+            <div class="col-xs-12 text-center">
+            <div id="img" class="col-lg-8">
+                <img ng-repeat="value in Values track by $index" class="imgresize" ng-class="{imgclick:value != 0}" src="img/{{value}}.gif" id="{{$index}}" ng-bind="value" ng-click="updateSelection(this)">
+            </div>
+                
+                    <div class="col-lg-4">
+                        <button ng-click="backToLobby()" class="col-xs-12 col-lg-12 btn btn-info">Back To Lobby</button>
+                        <div>
+                        
+                        <h5 class="col-lg-12 col-xs-12" style="text-align: -webkit-auto;">Players list</h5>
+                        <div>
+                        <ul class="col-lg-12 col-xs-12" style="box-shadow: 0 0 5px #FFF;margin: 0;text-align: -webkit-auto;">
+                            <li ng-repeat="players in roomPlayers"><b><img src="{{imgIdentifier}}{{players.photoIdentifier}}" style="width:20px;margin-right: 10px;" alt="" />{{players.accountName}}<span style="background: #FFFFFF;font-size: 15px;">
+                                        <strong>Scores:</strong>{{players.scores}}</span></b></li>
+                        </ul>
+                        </div>   
+                        <h5>Start chatting</h5>
+                    <div class="messageDiv col-lg-12">
+                        <div id="convo" data-from="Sonu Joshi">
+                        <ul class="chat-thread">
+                            <li style="padding-top:20px;" ng-repeat="msg in messages"><img class="photoClass" src="{{imgIdentifier}}{{msg.imgId}}" alt=""> <p>{{msg.message}}</p></li>
+                        </ul>
+                        </div>
+                        <div>
+                         <input ng-model="message" type="text" id="msg2" class="col-lg-7 form-control" placeholder="Your message">
+                         <button ng-click="sendMessage()" class="col-lg-12 col-xs-12 btn btn-info" id="sendBtn">Send</button>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+        </div> 
+        <div class="containerLobby3 container">
+        </div>
+        <div class="containerLobby2">
+        </div>
+        
+            
+        <!-- Button trigger modal for checking sessions-->
+
+      <button type="button" style="display:none" id="alert" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#Alert">
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="Alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+              </div>
+              <div class="modal-body text-center">
+                Your session expired, please sign in. <br>Redirecting to index page in <span id='spanid'>2</span>s...
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="backToIndex()" class="btn btn-default"  data-dismiss="modal">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                        <h3>Location</h3>
+                        <p>InsightData Org<br>Singapore, Clementi</p>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>Around the Web</h3>
+                        <ul class="list-inline ul" style="margin-left: auto">
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>About this Game</h3>
+                        <p>J2EE, MYSQL, ANGULARJS <br><a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright InsightData Website 2016
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script src="js/classie.js"></script>
+        <script src="js/cbpAnimatedHeader.js"></script>
+        <script src="js/jqBootstrapValidation.js"></script>
+        <script src="js/freelancer.js"></script>
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/angular-animate.js"></script>
+        <script src="js/AngularApp/App/IndexApp.js"></script>
+        <script src="js/AngularApp/Service/PlayGameService.js"></script>
+        <script src="js/AngularApp/Controller/PlayGameController.js"></script>
+<!--        <script language="javascript">
+                var name = "#floatMenu";
+                var menuYloc = null;
+
+                        $(document).ready(function(){
+                                menuYloc = parseInt($(name).css("top").substring(0,$(name).css("top").indexOf("px")))
+                                $(window).scroll(function () {
+                                        offset = menuYloc+$(document).scrollTop()+"px";
+                                        $(name).animate({top:offset},{duration:500,queue:false});
+                                });
+                        });
+        </script>-->
     </body>
 </html>
