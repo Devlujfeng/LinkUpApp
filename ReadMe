@@ -1,0 +1,5 @@
+This Web project is using Below techniques:
+
+Frontend: Angularjs, Jquery, Bootstrap
+Backend: EJB, JPA, RestFul API JAX-RS, CDI
+DB: Mysql
